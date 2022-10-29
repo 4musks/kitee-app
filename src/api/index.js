@@ -71,3 +71,95 @@ export const getUserInfo = async () => {
     return processError(error);
   }
 };
+
+export const getForm = async ({ formRef }) => {
+  try {
+    const response = await API.get(`/forms/${formRef}`, {
+      headers: getHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const getForms = async () => {
+  try {
+    const response = await API.get("/forms/", {
+      headers: getHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const getPublishedForm = async ({ formRef }) => {
+  try {
+    const response = await API.get(`/forms/published/${formRef}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const putForm = async ({
+  formRef,
+  title = null,
+  questions = null,
+  isEmailNotificationEnabled = null,
+  shouldPublish = null,
+  customMetadata = null,
+}) => {
+  try {
+    const response = await API.put(
+      "/forms/",
+      {
+        title: title ? String(title).trim() : title,
+        formRef,
+        questions,
+        isEmailNotificationEnabled,
+        shouldPublish,
+        customMetadata,
+      },
+      {
+        headers: getHeaders(),
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const putPublishForm = async ({ formRef, title, questions }) => {
+  try {
+    const response = await API.put(
+      "/forms/publish",
+      { formRef, title, questions },
+      {
+        headers: getHeaders(),
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const deleteForm = async ({ formRef }) => {
+  try {
+    const response = await API.delete(`/forms/${formRef}`, {
+      headers: getHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};

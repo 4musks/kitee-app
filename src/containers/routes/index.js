@@ -9,6 +9,7 @@ import Drawer from "@material-ui/core/Drawer";
 import SignUpContainer from "../auth/signup";
 import SignInContainer from "../auth/signin";
 import DashboardContainer from "../dashboard";
+import FormBuilderContainer from "../form-builder";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import PageNotFound from "../../components/PageNotFound";
 import NavBar from "../../components/NavBar";
@@ -159,6 +160,18 @@ const RootContainer = () => {
               isLoggedIn={user.isLoggedIn}
               render={(props) => (
                 <DashboardContainer
+                  {...props}
+                  breadcrumbs={breadcrumbs}
+                  handleBreadcrumbs={handleBreadcrumbs}
+                />
+              )}
+            />
+
+            <ProtectedRoute
+              path="/form-builder"
+              isLoggedIn={user.isLoggedIn}
+              render={(props) => (
+                <FormBuilderContainer
                   {...props}
                   breadcrumbs={breadcrumbs}
                   handleBreadcrumbs={handleBreadcrumbs}
