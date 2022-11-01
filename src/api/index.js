@@ -1,5 +1,6 @@
 import axios from "axios";
 import { KITEE_TOKEN } from "../utils/constants";
+import {REACT_APP_API_BASE_URL} from "../utils/config";
 
 const API = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -158,6 +159,78 @@ export const deleteForm = async ({ formRef }) => {
       headers: getHeaders(),
     });
     return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const getInsights = async ({ formRef }) => {
+  try {
+    const result = await axios.get(
+        `${REACT_APP_API_BASE_URL}/insights/${formRef}`,
+        {
+          headers: getHeaders(),
+        }
+    );
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postOpenEvent = async ({ formRef }) => {
+  try {
+    const result = await axios.post(
+        `${REACT_APP_API_BASE_URL}/insights/events/open`,
+        { formRef }
+    );
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postStartEvent = async ({ formRef }) => {
+  try {
+    const result = await axios.post(
+        `${REACT_APP_API_BASE_URL}/insights/events/start`,
+        { formRef }
+    );
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postCompleteEvent = async ({ formRef }) => {
+  try {
+    const result = await axios.post(
+        `${REACT_APP_API_BASE_URL}/insights/events/complete`,
+        { formRef }
+    );
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postSeeEvent = async ({ formRef, seenQuestionId }) => {
+  try {
+    const result = await axios.post(
+        `${REACT_APP_API_BASE_URL}/insights/events/see`,
+        { formRef, seenQuestionId }
+    );
+
+    return result.data;
   } catch (error) {
     console.error(error);
     return processError(error);

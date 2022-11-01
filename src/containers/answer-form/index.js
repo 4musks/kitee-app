@@ -9,7 +9,10 @@ import ThankYouBox from "../../components/ThankYouBox";
 import { QUESTION_TYPE } from "../../enums/Questions";
 import { validate } from "./helper";
 import { isNumberValid } from "../../utils/common";
-import { getPublishedForm } from "../../api";
+import {
+  getPublishedForm,
+  postOpenEvent,
+} from "../../api";
 import "./styles.css";
 
 const AnswerFormContainer = (props) => {
@@ -135,6 +138,7 @@ const AnswerFormContainer = (props) => {
           setResponseRef(nanoid());
 
           // TODO: post open event
+          await postOpenEvent({ formRef });
         } else {
           setShouldShowCannotAccessForm(true);
         }
