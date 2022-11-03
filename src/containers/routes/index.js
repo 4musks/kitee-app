@@ -10,6 +10,7 @@ import SignUpContainer from "../auth/signup";
 import SignInContainer from "../auth/signin";
 import DashboardContainer from "../dashboard";
 import FormBuilderContainer from "../form-builder";
+import AnswerFormContainer from "../answer-form";
 import InsightsContainer from "../insights";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import PageNotFound from "../../components/PageNotFound";
@@ -154,6 +155,8 @@ const RootContainer = () => {
                 />
               )}
             />
+
+            <Route path="/form" component={AnswerFormContainer} />
 
             <ProtectedRoute
               exact

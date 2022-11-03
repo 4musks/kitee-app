@@ -11,7 +11,6 @@ import { validate } from "./helper";
 import { isNumberValid } from "../../utils/common";
 import {
   getPublishedForm,
-  postOpenEvent,
 } from "../../api";
 import "./styles.css";
 
@@ -63,7 +62,6 @@ const AnswerFormContainer = (props) => {
     if (!isPreviewMode) {
       setIsLoading(true);
       // console.log("submit response");
-
       // TODO: post response
 
       // console.log("complete");
@@ -138,7 +136,6 @@ const AnswerFormContainer = (props) => {
           setResponseRef(nanoid());
 
           // TODO: post open event
-          await postOpenEvent({ formRef });
         } else {
           setShouldShowCannotAccessForm(true);
         }
