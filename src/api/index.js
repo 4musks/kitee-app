@@ -238,3 +238,17 @@ export const postResponse = async ({ formRef, responseRef, response }) => {
     return processError(error);
   }
 };
+
+export const getResponses = async ({ formRef }) => {
+  try {
+    const result = await API.get(`/responses/${formRef}`,
+      {
+        headers: getHeaders(),
+      }
+    );
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};

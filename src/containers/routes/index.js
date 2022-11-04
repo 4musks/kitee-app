@@ -12,6 +12,7 @@ import DashboardContainer from "../dashboard";
 import FormBuilderContainer from "../form-builder";
 import AnswerFormContainer from "../answer-form";
 import InsightsContainer from "../insights";
+import ResponsesContainer from "../responses";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import PageNotFound from "../../components/PageNotFound";
 import NavBar from "../../components/NavBar";
@@ -188,6 +189,18 @@ const RootContainer = () => {
                 isLoggedIn={user.isLoggedIn}
                 render={(props) => (
                     <InsightsContainer
+                        {...props}
+                        breadcrumbs={breadcrumbs}
+                        handleBreadcrumbs={handleBreadcrumbs}
+                    />
+                )}
+            />
+
+            <ProtectedRoute
+                path="/responses"
+                isLoggedIn={user.isLoggedIn}
+                render={(props) => (
+                    <ResponsesContainer
                         {...props}
                         breadcrumbs={breadcrumbs}
                         handleBreadcrumbs={handleBreadcrumbs}
