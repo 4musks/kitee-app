@@ -13,11 +13,12 @@ import { LocalizationProvider, DatePicker } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { OKButton } from "../CustomButton";
+import { OKButton, SubmitButton } from "../CustomButton";
 import LinearScale from "../LinearScale";
 import RatingScale from "../RatingScale";
 import AnswerTextField from "../AnswerTextField";
 import OptionsListDialog from "../OptionsListDialog";
+import ThankYouBox from "../ThankYouBox";
 import { QUESTION_TYPE } from "../../enums/Questions";
 import "./styles.css";
 
@@ -52,6 +53,9 @@ const QuestionBox = (props) => {
     handleDescriptionChange,
     optionsList,
     createOptionsList,
+    handleOK,
+    showSubmit,
+    showThankYou,
     validationError,
   } = props;
 
@@ -81,115 +85,124 @@ const QuestionBox = (props) => {
   };
 
   return (
-    <div className="question-box-root-container">
-      <div className="question-box-container">
-        <div className="question-box-question-number">{number})</div>
-        <div className="question-box-question-container">
-          <div className="question-box-text-field-container">
-            {answerable ? (
-              <div className="question-box-question-value">
-                {questionValue ? (
-                  <Typography
-                    style={{
-                      whiteSpace: "pre-wrap",
-                      fontSize: 18,
-                      fontFamily: "Muli",
-                    }}
-                    component="span"
-                  >
-                    {questionValue}
-                  </Typography>
-                ) : (
-                  "..."
-                )}{" "}
-                {isRequired && "*"}
+    <div
+      className={
+        answerable
+          ? "question-box-root-container"
+          : "question-box-root-scrollable-container"
+      }
+    >
+      {!showThankYou && (
+        <div className="question-box-container" style={{ marginTop: "5%" }}>
+          <div className="question-box-question-number">{number})</div>
+          <div className="question-box-question-container">
+            <div className="question-box-text-field-container">
+              {answerable ? (
+                <div className="question-box-question-value">
+                  {questionValue ? (
+                    <Typography
+                      style={{
+                        whiteSpace: "pre-wrap",
+                        fontSize: 18,
+                        fontFamily: "Muli",
+                      }}
+                      component="span"
+                    >
+                      {questionValue}
+                    </Typography>
+                  ) : (
+                    "..."
+                  )}{" "}
+                  {isRequired && "*"}
+                </div>
+              ) : (
+                <TextField
+                  onChange={handleQuestionChange}
+                  value={questionValue}
+                  placeholder={questionPlaceholder}
+                  className="question-box-text-field"
+                  InputProps={{ disableUnderline: true }}
+                  multiline
+                />
+              )}
+            </div>
+
+            <div className="question-box-description-text-field-container">
+              {answerable ? (
+                <div className="question-box-description-value">
+                  {descriptionValue ? (
+                    <Typography
+                      style={{
+                        whiteSpace: "pre-wrap",
+                        fontSize: 16,
+                        fontFamily: "Muli",
+                      }}
+                      component="span"
+                    >
+                      {descriptionValue}
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                <TextField
+                  onChange={handleDescriptionChange}
+                  value={descriptionValue}
+                  placeholder={descriptionPlaceholder}
+                  className="question-box-description-text-field"
+                  InputProps={{ disableUnderline: true }}
+                  multiline
+                />
+              )}
+            </div>
+
+            {type === QUESTION_TYPE.TEXT ||
+            type === QUESTION_TYPE.EMAIL ||
+            type === QUESTION_TYPE.NUMBER ||
+            type === QUESTION_TYPE.WEBSITE ? (
+              <div className="question-box-answer-text-field-container">
+                <AnswerTextField
+                  onChange={(event) => handleAnswerChange(event.target.value)}
+                  value={answer}
+                  placeholder={answerPlaceholder}
+                  className="question-box-answer-text-field"
+                  disabled={!answerable}
+                  multiline={type === QUESTION_TYPE.TEXT ? true : false}
+                />
               </div>
-            ) : (
-              <TextField
-                onChange={handleQuestionChange}
-                value={questionValue}
-                placeholder={questionPlaceholder}
-                className="question-box-text-field"
-                InputProps={{ disableUnderline: true }}
-                multiline
-              />
-            )}
-          </div>
+            ) : null}
 
-          <div className="question-box-description-text-field-container">
-            {answerable ? (
-              <div className="question-box-description-value">
-                {descriptionValue ? (
-                  <Typography
-                    style={{
-                      whiteSpace: "pre-wrap",
-                      fontSize: 16,
-                      fontFamily: "Muli",
-                    }}
-                    component="span"
-                  >
-                    {descriptionValue}
-                  </Typography>
-                ) : (
-                  ""
-                )}
+            {type === QUESTION_TYPE.YES_NO && (
+              <div className="yes-no-container">
+                <OKButton onClick={() => handleAnswerChange("YES")}>
+                  Yes
+                </OKButton>
+                <OKButton onClick={() => handleAnswerChange("NO")}>No</OKButton>
               </div>
-            ) : (
-              <TextField
-                onChange={handleDescriptionChange}
-                value={descriptionValue}
-                placeholder={descriptionPlaceholder}
-                className="question-box-description-text-field"
-                InputProps={{ disableUnderline: true }}
-                multiline
-              />
             )}
-          </div>
 
-          {type === QUESTION_TYPE.TEXT ||
-          type === QUESTION_TYPE.EMAIL ||
-          type === QUESTION_TYPE.NUMBER ||
-          type === QUESTION_TYPE.WEBSITE ? (
-            <div className="question-box-answer-text-field-container">
-              <AnswerTextField
-                onChange={(event) => handleAnswerChange(event.target.value)}
-                value={answer}
-                placeholder={answerPlaceholder}
-                className="question-box-answer-text-field"
-                disabled={!answerable}
-                multiline={type === QUESTION_TYPE.TEXT ? true : false}
-              />
-            </div>
-          ) : null}
+            {type === QUESTION_TYPE.LINEAR_SCALE && (
+              <div className="question-box-linear-scale-container">
+                <LinearScale
+                  length={10}
+                  handleLinearScale={(scale) => handleAnswerChange(scale)}
+                />
+              </div>
+            )}
 
-          {type === QUESTION_TYPE.YES_NO && (
-            <div className="yes-no-container">
-              <OKButton onClick={() => handleAnswerChange("YES")}>Yes</OKButton>
-              <OKButton onClick={() => handleAnswerChange("NO")}>No</OKButton>
-            </div>
-          )}
+            {type === QUESTION_TYPE.RATING && (
+              <div className="question-box-rating-container">
+                <RatingScale
+                  length={10}
+                  rating={answer}
+                  handleRatingScale={(rate) => handleAnswerChange(rate)}
+                  readOnly={!answerable}
+                />
+              </div>
+            )}
 
-          {type === QUESTION_TYPE.LINEAR_SCALE && (
-            <div className="question-box-linear-scale-container">
-              <LinearScale
-                length={10}
-                handleLinearScale={(scale) => handleAnswerChange(scale)}
-              />
-            </div>
-          )}
-
-          {type === QUESTION_TYPE.RATING && (
-            <div className="question-box-rating-container">
-              <RatingScale
-                length={10}
-                rating={answer}
-                handleRatingScale={(rate) => handleAnswerChange(rate)}
-                readOnly={!answerable}
-              />
-            </div>
-          )}
-
-          {/* {type === QUESTION_TYPE.PHONE_NUMBER && (
+            {/* {type === QUESTION_TYPE.PHONE_NUMBER && (
               <div className="question-box-phone-number-container">
                 <PhoneInput
                   enableSearch
@@ -203,114 +216,133 @@ const QuestionBox = (props) => {
               </div>
             )} */}
 
-          {type === QUESTION_TYPE.DATE && (
-            <div className="question-box-answer-date-field-container">
-              <LocalizationProvider
-                dateAdapter={DateFnsAdapter}
-                locale={enLocale}
-              >
-                <DatePicker
-                  value={answer}
-                  onChange={handleAnswerChange}
-                  renderInput={(datePickerProps) => (
-                    <TextField
-                      {...datePickerProps}
-                      className="date-text-field"
-                    />
-                  )}
-                />
-              </LocalizationProvider>
-            </div>
-          )}
-
-          {type === QUESTION_TYPE.DROPDOWN && (
-            <div>
-              <div className="question-box-drop-down-container">
-                <FormControl className="question-box-drop-down-input-select-field">
-                  <Select
+            {type === QUESTION_TYPE.DATE && (
+              <div className="question-box-answer-date-field-container">
+                <LocalizationProvider
+                  dateAdapter={DateFnsAdapter}
+                  locale={enLocale}
+                >
+                  <DatePicker
                     value={answer}
-                    onChange={(event) => handleAnswerChange(event.target.value)}
-                    autoComplete="off"
-                    inputProps={{
-                      autoComplete: "new-password",
-                    }}
-                    disabled={optionsList.length ? false : true}
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select an option...
-                    </MenuItem>
-                    {optionsList.map((item, index) => (
-                      <MenuItem
-                        key={`${item.value}#${index}`}
-                        value={item.value}
-                      >
-                        {item.value}
+                    onChange={handleAnswerChange}
+                    renderInput={(datePickerProps) => (
+                      <TextField
+                        {...datePickerProps}
+                        className="date-text-field"
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </div>
+            )}
+
+            {type === QUESTION_TYPE.DROPDOWN && (
+              <div>
+                <div className="question-box-drop-down-container">
+                  <FormControl className="question-box-drop-down-input-select-field">
+                    <Select
+                      value={answer}
+                      onChange={(event) =>
+                        handleAnswerChange(event.target.value)
+                      }
+                      autoComplete="off"
+                      inputProps={{
+                        autoComplete: "new-password",
+                      }}
+                      disabled={optionsList.length ? false : true}
+                      displayEmpty
+                    >
+                      <MenuItem value="" disabled>
+                        Select an option...
                       </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-
-              {!answerable && (
-                <div className="question-box-drop-down-add-options-button-list-count-container">
-                  <AddOptionsButton onClick={handleOpenOptionsListDialog}>
-                    Add Options
-                  </AddOptionsButton>
-
-                  <Typography
-                    variant="subtitle1"
-                    style={{ fontFamily: "Muli" }}
-                  >
-                    {optionsList.length}{" "}
-                    {optionsList.length === 1 ? "option" : "options"} in list
-                  </Typography>
+                      {optionsList.map((item, index) => (
+                        <MenuItem
+                          key={`${item.value}#${index}`}
+                          value={item.value}
+                        >
+                          {item.value}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
-              )}
-            </div>
-          )}
 
-          {type === QUESTION_TYPE.MULTIPLE_CHOICE && (
-            <div>
-              <div className="question-box-multiple-choice-list">
-                {optionsList.map((item, index) => (
-                  <div key={`${item.value}#${index}`}>
-                    <Checkbox
-                      checked={item.checked}
-                      onChange={() => handleAnswerChange("", index)}
-                      className="question-box-multiple-choice-checkbox"
-                    />
-                    <span className="question-box-multiple-choice-item">
-                      {item.value}
-                    </span>
+                {!answerable && (
+                  <div className="question-box-drop-down-add-options-button-list-count-container">
+                    <AddOptionsButton onClick={handleOpenOptionsListDialog}>
+                      Add Options
+                    </AddOptionsButton>
+
+                    <Typography
+                      variant="subtitle1"
+                      style={{ fontFamily: "Muli" }}
+                    >
+                      {optionsList.length}{" "}
+                      {optionsList.length === 1 ? "option" : "options"} in list
+                    </Typography>
                   </div>
-                ))}
+                )}
               </div>
+            )}
 
-              {!answerable && (
-                <AddOptionsButton onClick={handleOpenOptionsListDialog}>
-                  Add Choices
-                </AddOptionsButton>
-              )}
-            </div>
-          )}
+            {type === QUESTION_TYPE.MULTIPLE_CHOICE && (
+              <div>
+                <div className="question-box-multiple-choice-list">
+                  {optionsList.map((item, index) => (
+                    <div key={`${item.value}#${index}`}>
+                      <Checkbox
+                        checked={item.checked}
+                        onChange={() => handleAnswerChange("", index)}
+                        className="question-box-multiple-choice-checkbox"
+                      />
+                      <span className="question-box-multiple-choice-item">
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
 
-          {shouldShowOptionsListDialog && (
-            <OptionsListDialog
-              open={shouldShowOptionsListDialog}
-              handleClose={handleCloseOptionsListDialog}
-              handleSave={handleSaveOptions}
-              options={options}
-            />
-          )}
+                {!answerable && (
+                  <AddOptionsButton onClick={handleOpenOptionsListDialog}>
+                    Add Choices
+                  </AddOptionsButton>
+                )}
+              </div>
+            )}
 
-          {validationError && (
-            <div className="question-box-validation-error-container">
-              {validationError}
-            </div>
-          )}
+            {shouldShowOptionsListDialog && (
+              <OptionsListDialog
+                open={shouldShowOptionsListDialog}
+                handleClose={handleCloseOptionsListDialog}
+                handleSave={handleSaveOptions}
+                options={options}
+              />
+            )}
+
+            {validationError && (
+              <div className="question-box-validation-error-container">
+                {validationError}
+              </div>
+            )}
+
+            {answerable && type !== QUESTION_TYPE.YES_NO ? (
+              <div className="question-box-button-container">
+                {showSubmit ? (
+                  <SubmitButton onClick={handleOK}>Submit</SubmitButton>
+                ) : (
+                  <OKButton onClick={handleOK}>Ok</OKButton>
+                )}
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
+      )}
+
+      {answerable && showThankYou ? (
+        <div className="question-box-thank-you-container">
+          <ThankYouBox />
+        </div>
+      ) : null}
     </div>
   );
 };

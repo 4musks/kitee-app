@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
+import Button from "@material-ui/core/Button";
+import Slide from "@material-ui/core/Slide";
 import QuestionBox from "../../components/QuestionBox";
 import Spinner from "../../components/Spinner";
 import CannotAccessForm from "../../components/CannotAccessForm";
-import { SubmitButton } from "../../components/CustomButton";
-import ThankYouBox from "../../components/ThankYouBox";
 import { QUESTION_TYPE } from "../../enums/Questions";
 import { validate } from "./helper";
-import { isNumberValid } from "../../utils/common";
 import {
   getPublishedForm,
+  postOpenEvent,
+  postStartEvent,
+  postCompleteEvent,
+  postSeeEvent,
+  postResponse,
 } from "../../api";
 import "./styles.css";
 
+const SLIDE_TIMEOUT_MS = 500;
+
+const wrapQuestions = (questions) =>
+  questions.map((question) => ({
+    ...question,
+    seen: false,
+  }));
+
 const AnswerFormContainer = (props) => {
-  const { isPreviewMode = false } = props;
+  const { isPreviewMode = false, isMobilePreviewMode = false } = props;
 
   const formRef = window.location.pathname.split("/")[2];
 
@@ -25,51 +37,196 @@ const AnswerFormContainer = (props) => {
 
   const [questions, setQuestions] = useState([]);
 
-  const [shouldShowSubmitButton, setShouldShowSubmitButton] = useState(true);
+  const [selectedQuestion, setSelectedQuestion] = useState({});
+
+  const [shouldShowSubmitButton, setShouldShowSubmitButton] = useState(false);
 
   const [shouldShowThankYouBlock, setShouldShowThankYouBlock] = useState(false);
 
+  const [shouldDisablePrevious, setShouldDisablePrevious] = useState(true);
+
+  const [shouldDisableNext, setShouldDisableNext] = useState(false);
+
   const [shouldShowCannotAccessForm, setShouldShowCannotAccessForm] =
     useState(false);
+
+  const [slideIn, setSlideIn] = useState(true);
+
+  const [slideDirection, setSlideDirection] = useState("right");
 
   // const [customMetadata, setCustomMetadata] = useState({
   //   title: "",
   //   description: "",
   // });
 
-  const validateAnswers = () => {
-    const newQuestions = [];
+  const handlePrevious = () => {
+    setSlideDirection("right");
+    setSlideIn(false);
 
-    for (let i = 0; i < questions.length; i += 1) {
-      const question = validate(questions[i]);
+    setTimeout(() => {
+      const currentQuestion = questions.find(
+        (elem) => elem.id === selectedQuestion.id
+      );
 
-      newQuestions.push(question);
-    }
+      const previousQuestion = questions.find(
+        (elem) => elem.number === currentQuestion.number - 1
+      );
 
-    setQuestions([...newQuestions]);
+      const nextQuestion = questions.find(
+        (elem) => elem.number === previousQuestion.number - 1
+      );
 
-    return !newQuestions.some((elem) => !!elem.validationError);
+      if (previousQuestion) {
+        setSelectedQuestion({ ...previousQuestion });
+        setShouldDisableNext(false);
+        setShouldShowSubmitButton(false);
+      }
+
+      if (!nextQuestion) {
+        setShouldDisablePrevious(true);
+      }
+
+      setSlideDirection("right");
+      setSlideIn(true);
+    }, SLIDE_TIMEOUT_MS);
   };
 
-  const handleSubmit = async () => {
+  const handleNext = async () => {
+    setSlideDirection("left");
+    setSlideIn(false);
+
+    setTimeout(async () => {
+      const previousQuestionIndex = questions.findIndex(
+        (elem) => elem.id === selectedQuestion.id
+      );
+
+      const previousQuestion = questions[previousQuestionIndex];
+
+      if (previousQuestionIndex === 0 && !previousQuestion.seen) {
+        // console.log("start");
+
+        if (!isPreviewMode) {
+          await postStartEvent({ formRef });
+        }
+      }
+
+      if (!previousQuestion.seen) {
+        const newQuestions = [...questions];
+
+        newQuestions[previousQuestionIndex].seen = true;
+
+        setQuestions(newQuestions);
+
+        // see API call
+
+        // console.log("see");
+
+        if (!isPreviewMode) {
+          await postSeeEvent({ formRef, seenQuestionId: previousQuestion.id });
+        }
+      }
+
+      const currentQuestion = questions.find(
+        (elem) => elem.number === previousQuestion.number + 1
+      );
+
+      let nextQuestion = null;
+
+      if (currentQuestion) {
+        setSelectedQuestion({ ...currentQuestion });
+
+        setShouldDisablePrevious(false);
+
+        nextQuestion = questions.find(
+          (elem) => elem.number === currentQuestion.number + 1
+        );
+      }
+
+      if (!nextQuestion) {
+        setShouldDisableNext(true);
+        setShouldShowSubmitButton(true);
+      } else {
+        setShouldShowSubmitButton(false);
+      }
+
+      if (!currentQuestion && !nextQuestion) {
+        setShouldShowThankYouBlock(true);
+
+        // complete API call
+
+        if (!isPreviewMode) {
+          setIsLoading(true);
+          // console.log("submit response");
+          await postResponse({ formRef, responseRef, response: questions });
+
+          // console.log("complete");
+          await postCompleteEvent({ formRef });
+          setIsLoading(false);
+        }
+      }
+
+      setSlideDirection("left");
+      setSlideIn(true);
+    }, SLIDE_TIMEOUT_MS);
+  };
+
+  const isValid = (question) => {
+    const newQuestion = validate(question);
+
+    if (newQuestion && newQuestion.validationError) {
+      setSelectedQuestion({ ...newQuestion });
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateAllAnswers = () => {
+    let isAnswerValid = true;
+
+    for (let i = 0; i < questions.length; i += 1) {
+      const newQuestion = validate(questions[i]);
+
+      if (newQuestion && newQuestion.validationError) {
+        setSelectedQuestion({ ...newQuestion });
+        setShouldShowSubmitButton(false);
+        isAnswerValid = false;
+
+        if (newQuestion.number === 1) {
+          setShouldDisablePrevious(true);
+          setShouldDisableNext(false);
+        } else if (newQuestion.number === questions.length) {
+          setShouldDisablePrevious(false);
+          setShouldDisableNext(true);
+        } else {
+          setShouldDisablePrevious(false);
+          setShouldDisableNext(false);
+        }
+
+        break;
+      }
+    }
+
+    return isAnswerValid;
+  };
+
+  const handleOK = async () => {
     // validate
 
-    if (!validateAnswers()) {
-      // setShouldShowSubmitButton(false);
+    const previousQuestion = questions.find(
+      (elem) => elem.id === selectedQuestion.id
+    );
+
+    if (!isValid(previousQuestion)) {
       return;
     }
 
-    if (!isPreviewMode) {
-      setIsLoading(true);
-      // console.log("submit response");
-      // TODO: post response
-
-      // console.log("complete");
-      // TODO: post complete event
-      setIsLoading(false);
+    if (shouldShowSubmitButton && !validateAllAnswers()) {
+      return;
     }
 
-    setShouldShowThankYouBlock(true);
+    // move to next question
+    await handleNext();
   };
 
   const handleAnswerChange = async (
@@ -78,21 +235,6 @@ const AnswerFormContainer = (props) => {
     answer,
     optionIndex = null // for multiple_choice
   ) => {
-    // console.log(
-    //   `handleAnswerChange =>
-    // questionId,
-    // questionType,
-    // answer,
-    // optionIndex = null // for multiple_choice
-    // `,
-    //   {
-    //     questionId,
-    //     questionType,
-    //     answer,
-    //     optionIndex,
-    //   }
-    // );
-
     const questionIndex = questions.findIndex((elem) => elem.id === questionId);
 
     const newQuestions = [...questions];
@@ -113,15 +255,17 @@ const AnswerFormContainer = (props) => {
       });
 
       newQuestions[questionIndex].answer = [...answers];
+    } else {
+      newQuestions[questionIndex].answer = answer;
     }
-
-    if (questionType === QUESTION_TYPE.NUMBER && !isNumberValid(answer)) {
-      return;
-    }
-
-    newQuestions[questionIndex].answer = answer;
 
     setQuestions(newQuestions);
+
+    setSelectedQuestion({ ...questions[questionIndex] });
+
+    if (questionType === QUESTION_TYPE.YES_NO) {
+      await handleNext();
+    }
   };
 
   useEffect(() => {
@@ -132,10 +276,17 @@ const AnswerFormContainer = (props) => {
         const response = await getPublishedForm({ formRef });
 
         if (response && response.success && response.data) {
-          setQuestions(response.data.questions);
+          setQuestions(wrapQuestions(response.data.questions));
+          setSelectedQuestion({ ...response.data.questions[0], seen: false });
           setResponseRef(nanoid());
+          setSlideIn(true);
 
-          // TODO: post open event
+          if (response.data.questions.length === 1) {
+            setShouldDisableNext(true);
+            setShouldShowSubmitButton(true);
+          }
+
+          await postOpenEvent({ formRef });
         } else {
           setShouldShowCannotAccessForm(true);
         }
@@ -143,7 +294,8 @@ const AnswerFormContainer = (props) => {
 
       getPublishedFormHandler();
     } else {
-      setQuestions(props.questions);
+      setQuestions(wrapQuestions(props.questions));
+      setSelectedQuestion({ ...props.questions[0], seen: false });
     }
 
     setTimeout(() => setIsLoading(false), 1000);
@@ -163,44 +315,98 @@ const AnswerFormContainer = (props) => {
         <div className="answer-form-root-container">
           {shouldShowCannotAccessForm ? (
             <CannotAccessForm />
-          ) : shouldShowThankYouBlock ? (
-            <div className="question-box-thank-you-container">
-              <ThankYouBox />
-            </div>
           ) : (
             <div className="answer-form-root-container">
-              <div className="answer-form-container">
-                {questions.map((question) => (
+              <Slide
+                direction={slideDirection}
+                in={slideIn}
+                mountOnEnter
+                unmountOnExit
+                timeout={SLIDE_TIMEOUT_MS}
+              >
+                <div className="answer-form-container">
                   <QuestionBox
-                    key={question.id}
-                    id={question.id}
-                    type={question.type}
-                    number={question.number}
-                    isRequired={question.isRequired}
-                    questionValue={question.questionValue}
-                    descriptionValue={question.descriptionValue}
-                    answer={question.answer}
-                    answerPlaceholder={question.answerPlaceholder}
+                    id={selectedQuestion.id}
+                    type={selectedQuestion.type}
+                    number={selectedQuestion.number}
+                    isRequired={selectedQuestion.isRequired}
+                    questionValue={selectedQuestion.questionValue}
+                    descriptionValue={selectedQuestion.descriptionValue}
+                    answer={selectedQuestion.answer}
+                    answerPlaceholder={selectedQuestion.answerPlaceholder}
                     handleAnswerChange={(value, optionIndex = null) =>
                       handleAnswerChange(
-                        question.id,
-                        question.type,
+                        selectedQuestion.id,
+                        selectedQuestion.type,
                         value,
                         optionIndex
                       )
                     }
                     answerable
-                    optionsList={question.options}
-                    validationError={question.validationError}
+                    optionsList={selectedQuestion.options}
+                    validationError={selectedQuestion.validationError}
+                    handleOK={handleOK}
+                    showSubmit={shouldShowSubmitButton}
+                    showThankYou={shouldShowThankYouBlock}
                   />
-                ))}
 
-                {shouldShowSubmitButton && (
-                  <div className="answer-form-submit-button-container">
-                    <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-                  </div>
-                )}
-              </div>
+                  {!shouldShowThankYouBlock && (
+                    <div
+                      className={
+                        isMobilePreviewMode
+                          ? "answer-form-bottom-actions-root-container-mobile-preview-mode"
+                          : "answer-form-bottom-actions-root-container"
+                      }
+                    >
+                      <div
+                        className={
+                          isMobilePreviewMode
+                            ? "answer-form-bottom-actions-container-mobile-preview-mode"
+                            : "answer-form-bottom-actions-container"
+                        }
+                      >
+                        <div className="answer-form-bottom-actions-button">
+                          <Button
+                            variant="contained"
+                            onClick={handlePrevious}
+                            disabled={shouldDisablePrevious}
+                            style={{
+                              backgroundColor: "#66b2b2",
+                              color: "#ffffff",
+                              fontFamily: "Muli",
+                              fontSize: 14,
+                              "&:hover": {
+                                backgroundColor: "#66b2b2d1",
+                              },
+                              textTransform: "none",
+                              marginRight: 20,
+                            }}
+                          >
+                            Prev
+                          </Button>
+                          <Button
+                            variant="contained"
+                            onClick={handleNext}
+                            disabled={shouldDisableNext}
+                            style={{
+                              backgroundColor: "#66b2b2",
+                              color: "#ffffff",
+                              fontFamily: "Muli",
+                              fontSize: 14,
+                              "&:hover": {
+                                backgroundColor: "#66b2b2d1",
+                              },
+                              textTransform: "none",
+                            }}
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Slide>
             </div>
           )}
         </div>

@@ -14,7 +14,6 @@ import Spinner from "../../components/Spinner";
 import { ViewFormButton } from "../../components/CustomButton";
 import { getInsights } from "../../api";
 import { QUESTION_TYPES_OPTIONS } from "../../enums/Questions";
-import { REACT_APP_KITEE_APP_URL } from "../../utils/config";
 import "./styles.css";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -114,7 +113,7 @@ const InsightsContainer = (props) => {
                 Overview
                 <ViewFormButton
                   endIcon={<OpenInNewIcon />}
-                  href={`${REACT_APP_KITEE_APP_URL}/form/${formRef}`}
+                  href={`${process.env.REACT_APP_KITEE_APP_URL}/form/${formRef}`}
                   target="_blank"
                   rel="noopener"
                 >

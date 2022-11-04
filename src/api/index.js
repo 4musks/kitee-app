@@ -166,13 +166,73 @@ export const deleteForm = async ({ formRef }) => {
 
 export const getInsights = async ({ formRef }) => {
   try {
-    const response = await API.get(`/insights/${formRef}`,
-        {
-          headers: getHeaders(),
-        }
-    );
+    const response = await API.get(`/insights/${formRef}`, {
+      headers: getHeaders(),
+    });
 
     return response.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postOpenEvent = async ({ formRef }) => {
+  try {
+    const result = await API.post("/insights/events/open", { formRef });
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postStartEvent = async ({ formRef }) => {
+  try {
+    const result = await API.post("/insights/events/start", { formRef });
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postCompleteEvent = async ({ formRef }) => {
+  try {
+    const result = await API.post("/insights/events/complete", { formRef });
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postSeeEvent = async ({ formRef, seenQuestionId }) => {
+  try {
+    const result = await API.post("/insights/events/see", {
+      formRef,
+      seenQuestionId,
+    });
+
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const postResponse = async ({ formRef, responseRef, response }) => {
+  try {
+    const result = await API.post("/responses/", {
+      formRef,
+      responseRef,
+      response,
+    });
+
+    return result.data;
   } catch (error) {
     console.error(error);
     return processError(error);
