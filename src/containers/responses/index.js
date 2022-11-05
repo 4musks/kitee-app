@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import moment from "moment-timezone";
 import { useSnackbar } from "notistack";
@@ -96,7 +95,6 @@ const ResponsesContainer = (props) => {
 
   return (
     <div>
-
       {isLoading ? (
         <div className="spinner-container">
           <Spinner loading={isLoading} />
@@ -204,7 +202,7 @@ const ResponsesContainer = (props) => {
               </div>
               <div className="responses-empty-illustration-container">
                 <img
-                  src={ImageAssets.Empty_Street_Illustration}
+                  src={ImageAssets.Empty_Illustration}
                   alt=""
                   width="100%"
                   height="100%"
