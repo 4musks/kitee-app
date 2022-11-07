@@ -241,12 +241,42 @@ export const postResponse = async ({ formRef, responseRef, response }) => {
 
 export const getResponses = async ({ formRef }) => {
   try {
-    const result = await API.get(`/responses/${formRef}`,
+    const result = await API.get(`/responses/${formRef}`, {
+      headers: getHeaders(),
+    });
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const triggerEmailVerification = async ({ email }) => {
+  try {
+    const result = await API.post(
+      `/users/trigger-email-verification`,
+      {
+        email: String(email).trim(),
+      },
       {
         headers: getHeaders(),
       }
     );
+
     return result.data;
+  } catch (error) {
+    console.error(error);
+    return processError(error);
+  }
+};
+
+export const verifyEmail = async ({ emailToken }) => {
+  try {
+    const response = await API.post(`/users/verify-email`, {
+      emailToken,
+    });
+
+    return response.data;
   } catch (error) {
     console.error(error);
     return processError(error);
