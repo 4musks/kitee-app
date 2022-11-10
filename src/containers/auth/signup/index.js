@@ -118,8 +118,7 @@ const SignUpContainer = (props) => {
         <Paper elevation={1} style={{ width: 500, height: 450 }}>
           <div className="signup-form-container">
             <div className="signup-form-header">
-              Ask efficiently and analyze effectively with forms, surveys,
-              quizzes and more.
+              Create forms and surveys in under 2 mins!
             </div>
 
             <div style={{ width: "75%", marginTop: "5%", marginBottom: "5%" }}>
