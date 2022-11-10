@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import { useSnackbar } from "notistack";
 import { withStyles } from "@material-ui/core/styles";
@@ -109,16 +108,11 @@ const SignUpContainer = (props) => {
 
   return (
     <div>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Kitee | Sign Up</title>
-      </Helmet>
-
       <div className="signup-container">
         <Paper elevation={1} style={{ width: 500, height: 450 }}>
           <div className="signup-form-container">
             <div className="signup-form-header">
-              Create forms and surveys in under 2 mins!
+              Create forms and surveys in under two mins
             </div>
 
             <div style={{ width: "75%", marginTop: "5%", marginBottom: "5%" }}>

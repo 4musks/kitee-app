@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/material.css";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -201,20 +199,6 @@ const QuestionBox = (props) => {
                 />
               </div>
             )}
-
-            {/* {type === QUESTION_TYPE.PHONE_NUMBER && (
-              <div className="question-box-phone-number-container">
-                <PhoneInput
-                  enableSearch
-                  inputProps={{
-                    name: "phone",
-                    required: true,
-                    autoFocus: true,
-                  }}
-                  dropdownStyle={{ height: "200" }}
-                />
-              </div>
-            )} */}
 
             {type === QUESTION_TYPE.DATE && (
               <div className="question-box-answer-date-field-container">

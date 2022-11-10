@@ -16,7 +16,8 @@ const Banner = (props) => {
           notifications for responses.
           <Link
             onClick={handleEmailVerificationTrigger}
-            style={{ cursor: "pointer", marginLeft: 3 }}>
+            style={{ cursor: "pointer", marginLeft: 3 }}
+          >
             <span style={{ fontWeight: "bold" }}> Click here to verify!</span>
           </Link>
           <IconButton onClick={onClose}>
@@ -29,7 +30,6 @@ const Banner = (props) => {
 };
 
 Banner.propTypes = {
-  type: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   handleEmailVerificationTrigger: PropTypes.func.isRequired,
 };

@@ -124,7 +124,7 @@ const ConnectContainer = (props) => {
                 <Grid
                   container
                   direction="row"
-                  justifyContent="space-around"
+                  justifyContent="space-start"
                   alignItems="flex-start"
                 >
                   {AppIntegrations.map((integration) => (

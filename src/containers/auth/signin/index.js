@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import { useSnackbar } from "notistack";
 import { withStyles } from "@material-ui/core/styles";
@@ -109,12 +108,8 @@ const SignInContainer = (props) => {
 
   return (
     <div>
-      <Helmet>
-        <title>Kitee | Sign In</title>
-      </Helmet>
-
       <div className="signin-container">
-        <Paper elevation={1} style={{ width: 500, height: 450 }}>
+        <Paper elevation={1} style={{ width: 500, height: 400 }}>
           <div className="signin-form-container">
             <div className="signin-form-header">
               Knock knock, who&apos;s there?
@@ -155,27 +150,15 @@ const SignInContainer = (props) => {
               )}
             </SignInButton>
 
-            <div className="signin-bottom-actions-container">
-              <div className="signin-dont-have-account-container">
-                Don&apos;t have an account?{" "}
-                <Link
-                  underline="none"
-                  href="/signup"
-                  style={{ color: "#66b2b2" }}
-                >
-                  Sign Up
-                </Link>
-              </div>
-
-              <div>
-                <Link
-                  underline="none"
-                  href="/forgot-password"
-                  style={{ color: "#66b2b2" }}
-                >
-                  Forgot password?
-                </Link>
-              </div>
+            <div className="signin-dont-have-account-container">
+              Don&apos;t have an account?{" "}
+              <Link
+                underline="none"
+                href="/signup"
+                style={{ color: "#66b2b2" }}
+              >
+                Sign Up
+              </Link>
             </div>
           </div>
         </Paper>

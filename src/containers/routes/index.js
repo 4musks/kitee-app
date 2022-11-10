@@ -14,6 +14,7 @@ import FormBuilderContainer from "../form-builder";
 import AnswerFormContainer from "../answer-form";
 import InsightsContainer from "../insights";
 import ResponsesContainer from "../responses";
+import ShareContainer from "../share";
 import VerifyEmailContainer from "../verify-email";
 import ConnectContainer from "../connect";
 import ProtectedRoute from "../../components/ProtectedRoute";
@@ -158,7 +159,8 @@ const RootContainer = () => {
           <Drawer
             open={Boolean(profileSideBarAnchorEl)}
             anchor="right"
-            onClose={handleProfileSidebarClose}>
+            onClose={handleProfileSidebarClose}
+          >
             <ProfileSideBar
               name={user.name}
               avatar={user.avatar}
@@ -251,6 +253,18 @@ const RootContainer = () => {
                 <ConnectContainer
                   {...props}
                   user={user}
+                  breadcrumbs={breadcrumbs}
+                  handleBreadcrumbs={handleBreadcrumbs}
+                />
+              )}
+            />
+
+            <ProtectedRoute
+              path="/share"
+              isLoggedIn={user.isLoggedIn}
+              render={(props) => (
+                <ShareContainer
+                  {...props}
                   breadcrumbs={breadcrumbs}
                   handleBreadcrumbs={handleBreadcrumbs}
                 />

@@ -9,6 +9,10 @@ import Notion_Logo from "./notion_logo.svg";
 import Pipedrive_Logo from "./pipe_drive_logo.jpg";
 import Mailchimp_Logo from "./mailchimp_logo.png";
 import Hubspot_Logo from "./hubspot_logo.svg";
+import Iframe_Logo from "./iframe_logo.png";
+import ReactJS_Logo from "./reactjs_logo.svg";
+import JavaScript_Logo from "./javascript_logo.svg";
+import Share_Link_Icon from "./share-link-icon.svg";
 
 const Images = {
   Logout_Icon,
@@ -21,7 +25,11 @@ const Images = {
   Notion_Logo,
   Pipedrive_Logo,
   Mailchimp_Logo,
-  Hubspot_Logo
+  Hubspot_Logo,
+  Iframe_Logo,
+  ReactJS_Logo,
+  JavaScript_Logo,
+  Share_Link_Icon,
 };
 
 export default Images;
