@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Kitee Form Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+ 
+### Cloud Project-2: Kitee
+University Name: http://www.sjsu.edu/  
 
-## Available Scripts
+Course: [Cloud Technologies ](http://info.sjsu.edu/web-dbgen/catalog/courses/CMPE281.html)
 
-In the project directory, you can run:
+Professor: [Sanjay Garje ](https://www.linkedin.com/in/sanjaygarje/)
 
-### `npm start`
+TA: [Supreetha M A](https://www.linkedin.com/in/supreethama)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Students:
 
-### `npm test`
+[Nihal Kaul](https://www.linkedin.com/in/nihalwashere)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[Utsav Rawat](https://www.linkedin.com/in/anvitha-jain-98170a10b/)
 
-### `npm run build`
+[Jaya Krishna Thupili]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Github Repository Link
+[Github Link](https://github.com/4musks/kitee-app)
 
-### `npm run eject`
+### App URL
+[App URL] (https://app.getkitee.com/)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Project Problem Statement:
+- Have you ever wanted to run a survey to validate your next billion dollar startup idea?
+- How would you build a form and share it with potential customers?
+- How would you collect responses that help you build insights?
+- Do you want to build forms that people would like answering?
+- Do you want to build forms in less time so that you can dedicate more time on the things that matter to you (your startup)?
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Proposed Solution/Project Idea:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Here comes Kitee, a simple and intuitive no-code form builder.
+- Kite with an extra “e” helps you to soar much higher than a Kite.
+- Kitee helps you to create forms and surveys in under 2 mins that people would like answering.
+- Kitee is a web application where a user can sign up and quickly start creating their first form, publish it to the world with a shareable public link and collect responses on the fly. Everything built into a single platform, Kitee acts as your control center for creating forms without writing a single line of code.
+- Kitee is a SaaS (Software as a Service) offering where customers can buy subscriptions and will be billed on a metered basis, for example - $19/month to publish up to 3 forms with a maximum of 100 responses each.
