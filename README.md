@@ -26,7 +26,7 @@ TA: [Supreetha M A](https://www.linkedin.com/in/supreethama)
 [Github Link](https://github.com/4musks/kitee-app)
 
 ### App URL
-[App URL] (https://app.getkitee.com/)
+App URL (https://app.getkitee.com/)
 
 ### Project Problem Statement:
 - Have you ever wanted to run a survey to validate your next billion dollar startup idea?
