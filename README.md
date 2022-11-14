@@ -16,14 +16,11 @@ TA: [Supreetha M A](https://www.linkedin.com/in/supreethama)
 
 [Nihal Kaul](https://www.linkedin.com/in/nihalwashere)
 
-[Utsav Rawat](https://www.linkedin.com/in/anvitha-jain-98170a10b/)
+[Utsav Rawat](https://www.linkedin.com/in/utsav-rawat-a519aa131)
 
 [Jaya Krishna Thupili]
 
 
-
-### Github Repository Link
-[Github Link](https://github.com/4musks/kitee-app)
 
 ### App URL
 App URL (https://app.getkitee.com/)
