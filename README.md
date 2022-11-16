@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# FA22: CMPE-281 Sec 48 - Cloud Technologies Project 2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+University Name: **[San Jose State University](http://www.sjsu.edu)**
 
-## Available Scripts
+Course: [Cloud Technologies](https://catalog.sjsu.edu/preview_course_nopop.php?catoid=12&coid=58375)
 
-In the project directory, you can run:
+Professor: Sanjay Garje [Linkedin](https://www.linkedin.com/in/sanjaygarje)
 
-### `npm start`
+## 1. Students
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Nihal Kaul [Linkedin](https://www.linkedin.com/in/nihalwashere)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Utsav Rawat [Linkedin](https://www.linkedin.com/in/utsav-rawat-a519aa131)
 
-### `npm test`
+Jaya Krishna Thupili [Linkedin](https://www.linkedin.com/in/thupili)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 2. Project Introduction
 
-### `npm run build`
+Kitee helps you to create forms and surveys in under 2 mins that people would like answering.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Kitee is a web application where a user can sign up and quickly start creating their first form, publish it to the world with a shareable public link and collect responses on the fly. Everything built into a single platform, Kitee acts as your control center for creating forms without writing a single line of code.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Kitee is a SaaS (Software as a Service) offering where customers can buy subscriptions and will be billed on a metered basis, for example - $19/month to publish up to 3 forms with a maximum of 100 responses each.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 3. Prerequisites
 
-### `npm run eject`
+- Cloud Provider & Services: [AWS](https://aws.amazon.com/free/)
+- Database: [MongoDB Atlas](https://www.mongodb.com/atlas/database)
+- Version Control: [Github Developer access](github.com/)
+- AWS Services
+  - IAM
+  - S3 Bucket
+  - Certificate Manager
+  - Route 53
+  - CloudFront
+  - CodePipeline
+  - Elastic Beanstack
+  - SNS
+  - CloudWatch
+  - SES
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 4. Local setup ad Configuration
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Tools**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   - Visual Studio Code
+   - Node
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   $ node --version
+   v16.13.2
+   $ npm -version
+   8.1.2
+   ```
 
-## Learn More
+   - Chrome with React Developer tools extension
+   - something else?
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. **Setup**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   - Git clone the repo
+   - Install dependencies
+   - Start the app
+   - Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Code Splitting
+   ```bash
+   git clone https://github.com/4musks/kitee-app.git
+   cd kite-app
+   npm install
+   npm start
+   ## After compiling and starting successfully.. O/P:
+       Compiled successfully!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+       You can now view kitee-app in the browser.
 
-### Analyzing the Bundle Size
+       Local:            http://localhost:3000
+       On Your Network:  http://192.168.56.1:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+       Note that the development build is not optimized.
+       To create a production build, use npm run build.
 
-### Making a Progressive Web App
+       webpack compiled successfully
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 5. Demo Screenshots
 
-### Advanced Configuration
+**_Page Navigation_**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1.  Signup and login using a valid email
+2.  Validate email to receive notifications
+3.  Create your first feedback form
+4.  Build your form using questions, statements, choices and date fields
+5.  Publish the form and share the url with participants
+6.  Receive instant email alert via email for each response.
+7.  Monitor the responses and insights
+8.  Further integrations (coming soon)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    ![Sigin](screenshots/1.signup_page.png)
+    ![verify_email](screenshots/2.1.verify_email.png)
+    ![verify_email_received](screenshots/2.2.email_received.png)
+    ![create_from](screenshots/3.create_form.png)
+    ![form_dashboard](screenshots/3.create_form_dashboard.png)
+    ![publish](screenshots/4.publish_form.png)
+    ![submit_sorm](screenshots/5.share_submit_form.png)
+    ![responses](screenshots/6.1.responses_received.png)
+    ![responses](screenshots/6.responses_received.png)
+    ![insignts](screenshots/7.insights.png)
+    ![coming_soon](screenshots/8.coming_soon.png)
