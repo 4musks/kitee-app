@@ -25,7 +25,6 @@ Kitee is a SaaS (Software as a Service) offering where customers can buy subscri
 ## 3. Prerequisites
 
 - Cloud Provider & Services: [AWS](https://aws.amazon.com/free/)
-- Database: [MongoDB Atlas](https://www.mongodb.com/atlas/database)
 - Version Control: [Github Developer access](github.com/)
 - AWS Services
   - IAM
@@ -45,6 +44,7 @@ Kitee is a SaaS (Software as a Service) offering where customers can buy subscri
 
    - Visual Studio Code
    - Node
+   - Chrome with "React Developer tools" extension
 
    ```bash
    $ node --version
@@ -52,9 +52,6 @@ Kitee is a SaaS (Software as a Service) offering where customers can buy subscri
    $ npm -version
    8.1.2
    ```
-
-   - Chrome with React Developer tools extension
-   - something else?
 
 2. **Setup**
 
@@ -82,28 +79,36 @@ Kitee is a SaaS (Software as a Service) offering where customers can buy subscri
        webpack compiled successfully
    ```
 
+3. **Configuration**
+
+   - In the root directory of `kitee-app`, create a file (.env) with the following variables
+
+   ```txt
+   REACT_APP_API_BASE_URL=http://localhost:7000/v1
+   REACT_APP_KITEE_APP_URL=http://localhost:3000
+   ```
+
 ## 5. Demo Screenshots
 
 **_Page Navigation_**
 
-1.  Signup and login using a valid email
-2.  Validate email to receive notifications
-3.  Create your first feedback form
-4.  Build your form using questions, statements, choices and date fields
-5.  Publish the form and share the url with participants
-6.  Receive instant email alert via email for each response.
-7.  Monitor the responses and insights
-8.  Further integrations (coming soon)
+1. Signup and login using a valid email
+2. Validate email to receive notifications
+3. Create your first feedback form
+4. Build your form using questions, statements, choices and date fields
+5. Publish the form and share the url with participants
+6. Receive instant email alert via email for each response.
+7. Monitor the responses and insights
+8. Further integrations (coming soon)
 
-    ![Sigin](screenshots/1.signup_page.png)
-    ![verify_email](screenshots/2.1.verify_email.png)
-    ![verify_email_received](screenshots/2.2.email_received.png)
-    ![create_from](screenshots/3.create_form.png)
-    ![form_dashboard](screenshots/3.create_form_dashboard.png)
-    ![publish](screenshots/4.publish_form.png)
-    ![submit_sorm](screenshots/5.share_submit_form.png)
-    ![responses](screenshots/6.1.responses_received.png)
-    ![responses](screenshots/6.responses_received.png)
-    ![insignts](screenshots/7.insights.png)
-    ![coming_soon](screenshots/8.coming_soon.png)
-
+   ![Sigin](screenshots/1.signup_page.png)
+   ![verify_email](screenshots/2.1.verify_email.png)
+   ![verify_email_received](screenshots/2.2.email_received.png)
+   ![create_from](screenshots/3.create_form.png)
+   ![form_dashboard](screenshots/3.create_form_dashboard.png)
+   ![publish](screenshots/4.publish_form.png)
+   ![submit_sorm](screenshots/5.share_submit_form.png)
+   ![responses](screenshots/6.1.responses_received.png)
+   ![responses](screenshots/6.responses_received.png)
+   ![insignts](screenshots/7.insights.png)
+   ![coming_soon](screenshots/8.coming_soon.png)
