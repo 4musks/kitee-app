@@ -309,7 +309,10 @@ const QuestionBox = (props) => {
               </div>
             )}
 
-            {answerable && type !== QUESTION_TYPE.YES_NO ? (
+            {answerable &&
+            type !== QUESTION_TYPE.YES_NO &&
+            type !== QUESTION_TYPE.LINEAR_SCALE &&
+            type !== QUESTION_TYPE.RATING ? (
               <div className="question-box-button-container">
                 {showSubmit ? (
                   <SubmitButton onClick={handleOK}>Submit</SubmitButton>

@@ -263,7 +263,11 @@ const AnswerFormContainer = (props) => {
 
     setSelectedQuestion({ ...questions[questionIndex] });
 
-    if (questionType === QUESTION_TYPE.YES_NO) {
+    if (
+      questionType === QUESTION_TYPE.YES_NO ||
+      questionType === QUESTION_TYPE.LINEAR_SCALE ||
+      questionType === QUESTION_TYPE.RATING
+    ) {
       await handleNext();
     }
   };
